@@ -219,7 +219,8 @@ class DumpTruck:
       question_marks = ','.join('?'*len(keys))
 
       # This is vulnerable to injection.
-      sql = u'INSERT INTO %s (%s) VALUES (%s);' % (quote(table_name), ','.join(keys), question_marks)
+      sql = u'INSERT OR REPLACE INTO %s (%s) VALUES (%s);' % (
+        quote(table_name), ','.join(keys), question_marks)
       self.execute(sql, values, commit=False)
 
     self.__commit_if_necessary(kwargs)
